@@ -53,16 +53,16 @@
 
 - (IBAction)testImageDownloader:(id)sender {
     NSURL *url = [NSURL URLWithString:@"https://s3.amazonaws.com/fast-image-cache/demo-images/FICDDemoImage003.jpg"];
-    [[NAWebDataDownloader sharedDownloader] downloadImageWithURL:url options:0 progressBlock:^(NSInteger receivedSize, NSInteger expectedSize) {
-        NSLog(@"progress");
-    } completedBlock:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-        NSLog(@"completed");
-    }];
-//    [[NAWebImageManager sharedManager] na_downloadImageForURL:url options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-//        
-//    } completion:^(UIImage *image, NSURL *imageUrl, NAImageCacheType cacheType, NSError *error, BOOL finished) {
-//        
+//    [[NAWebDataDownloader sharedDownloader] downloadImageWithURL:url options:0 progressBlock:^(NSInteger receivedSize, NSInteger expectedSize) {
+//        NSLog(@"progress");
+//    } completedBlock:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+//        NSLog(@"completed");
 //    }];
+    [[NAWebImageManager sharedManager] na_downloadImageForURL:url options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        
+    } completion:^(UIImage *image, NSURL *imageUrl, NAImageCacheType cacheType, NSError *error, BOOL finished) {
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

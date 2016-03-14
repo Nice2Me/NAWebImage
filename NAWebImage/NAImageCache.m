@@ -17,9 +17,11 @@ inline NSUInteger NACacheCostForImage(UIImage *image) {
     return (image.size.width * image.size.height * image.scale);
 }
 
+
 inline NSString* NACacheKeyForURL(NSURL *url) {
     return (url ? [NSString stringWithString:url.absoluteString] : nil);
 }
+
 
 inline UIImage* NAScaledImageForKey(NSString *key, UIImage *image) {
     if (!key || !image) {
@@ -102,9 +104,7 @@ inline BOOL HasPNGPrefixForImageData(NSData *data) {
 @interface NAImageCache ()
 @property (nonatomic, strong) NSCache *memCache;
 @property (nonatomic, copy) NSString *diskCachePath;
-
 @property (nonatomic, strong) dispatch_queue_t ioQueue;
-
 @property (nonatomic, strong) NSFileManager *fileManager;
 @end
 
@@ -139,6 +139,7 @@ inline BOOL HasPNGPrefixForImageData(NSData *data) {
 
 - (instancetype)initWithNamespace:(NSString *)namespace cacheDirectory:(NSString *)cacheDirectory {
     if ((self = [super init])) {
+        // init the data of png signature
         kPngSignatureData = [NSData dataWithBytes:kPNGSignatureBytes length:8];
         
         NSString *fullNamespace = [@"namespace.memoryCache.directory." stringByAppendingString:namespace];
@@ -150,8 +151,6 @@ inline BOOL HasPNGPrefixForImageData(NSData *data) {
         
         _memCache = [[NAAutoPurgeCache alloc] init];
         _memCache.name = fullNamespace;
-        _memCache.countLimit = 30;
-        _memCache.totalCostLimit = 50;
       
         _maxCacheAge = kDefaultMaxCacheAge;
         _maxCacheSize = 50;
@@ -161,13 +160,15 @@ inline BOOL HasPNGPrefixForImageData(NSData *data) {
             _fileManager = [NSFileManager new];
         });
         
+#if TARGET_OS_IPHONE
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearMemory) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cleanDisk) name:UIApplicationWillTerminateNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cleanDiskOnBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+#endif
     }
     return self;
-
 }
+
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -192,7 +193,7 @@ inline BOOL HasPNGPrefixForImageData(NSData *data) {
 
 
 - (void)storeImage:(UIImage *)image forKey:(NSString *)key {
-    [self storeImage:image toDisk:NO forKey:key];
+    [self storeImage:image toDisk:YES forKey:key];
 }
 
 
@@ -201,7 +202,7 @@ inline BOOL HasPNGPrefixForImageData(NSData *data) {
         return nil;
     }
     
-    if (key.length <= 0) {
+    if (!key) {
         safe_block(completion, nil, kNAImageCacheNone);
         return nil;
     }

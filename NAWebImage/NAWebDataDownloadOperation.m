@@ -29,12 +29,12 @@ NSURLConnectionDataDelegate
 >
 
 @property (nonatomic, assign, getter=isResponseFromCache) BOOL responseFromCache;
-@property (nonatomic, assign, getter=isSupportedContinueFromBreakpoint) BOOL supportedContinueFromBreakpoint;
+@property (nonatomic, assign, getter=isSupportedContinueFromBreakpoint) BOOL supportedContinueFromBreakpoint;//支持断点续传
 
-@property (nonatomic, assign, getter=isFinished) BOOL finished;
+@property (nonatomic, assign, getter=isFinished)  BOOL finished;
 @property (nonatomic, assign, getter=isExecuting) BOOL executing;
 
-@property (nonatomic, strong) NSURLRequest *urlRequest;
+@property (nonatomic, strong) NSURLRequest  *urlRequest;
 @property (nonatomic, strong) NSURLResponse *urlResponse;
 
 // NSURLConnection
@@ -77,6 +77,38 @@ NSURLSessionDataDelegate
 
 @implementation NAWebDataDownloadOperation (NSURLConnection)
 
+- (void)startConnectionTask {
+    self.executing = YES;
+    self.urlConnection = [[NSURLConnection alloc] initWithRequest:self.urlRequest delegate:self startImmediately:NO];
+    self.thread = [NSThread currentThread];
+    [self.urlConnection start];
+    
+    safe_async_main_queue_block(self.progressBlock, nil, 0, NSURLResponseUnknownLength);
+    
+    if (self.urlConnection) {
+        safe_async_main_queue_block(^() {
+            [[NSNotificationCenter defaultCenter] postNotificationName:NAWebDataDownloadStartNotification object:self];
+        });
+        
+        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_5_1) {
+            // Make sure to run the runloop in our background thread so it can process downloaded data
+            // Note: we use a timeout to work around an issue with NSURLConnection cancel under iOS 5
+            //       not waking up the runloop, leading to dead threads (see https://github.com/rs/SDWebImage/issues/466)
+            CFRunLoopRunInMode(kCFRunLoopDefaultMode, 10, false);
+        } else {
+            CFRunLoopRun();
+        }
+        
+        if (!self.isFinished) {
+            [self.urlConnection cancel];
+            [self connection:self.urlConnection didFailWithError:[NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorTimedOut userInfo:@{NSURLErrorFailingURLErrorKey : self.urlRequest.URL}]];
+        }
+    } else {
+        safe_block(self.completedBlock, nil, [NSError errorWithDomain:NSURLErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Connection can't be initialized"}], YES);
+    }
+}
+
+
 #pragma mark - NSURLConnectionDelegate and NSURLConnectionDataDelegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -84,47 +116,6 @@ NSURLSessionDataDelegate
     [self.data appendData:data];
     
     safe_block(self.progressBlock, self.data, self.data.length, self.expectedSize);
-    
-//    self.imageData ? nil : (self.imageData = [NSMutableData new]);
-//    [self.imageData appendData:data];
-//    
-//    if ([self.imageData length] > 0 && self.completedBlock) {
-//        const NSInteger receivedTotalSize = [self.imageData length];
-//        
-//        CGImageSourceRef imageSource = CGImageSourceCreateWithData((__bridge CFDataRef)self.imageData, NULL);
-//        NSInteger width = 0, height = 0;
-//        NSInteger orientation = 0;
-//        if (width + height == 0) {
-//            CFDictionaryRef properties =  CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
-//            
-//            CFTypeRef value = CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth);
-//            if (value) CFNumberGetValue(value, kCFNumberLongType, &width);
-//            
-//            value = CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight);
-//            if (value) CFNumberGetValue(value, kCFNumberLongType, &height);
-//            
-//            value = CFDictionaryGetValue(properties, kCGImagePropertyOrientation);
-//            if (value) CFNumberGetValue(value, kCFNumberNSIntegerType, &orientation);
-//            
-//            CFRelease(properties);
-//            
-//            orientation = [[self class] orientationFromPropertyValue:(orientation == -1 ? 1 : orientation)];
-//        }
-//        
-//        if (width + height > 0 && receivedTotalSize < self.expectedSize) {
-//            CGImageRef partialImageRef = CGImageSourceCreateImageAtIndex(imageSource, 0, NULL);
-//            if (partialImageRef) {
-//                UIImage *tmpImage = partialImageRef ? [UIImage imageWithCGImage:partialImageRef] : nil;
-//                
-//                safe_main_queue_block(self.completedBlock, tmpImage, self.imageData, nil, NO);
-//                
-//                CGImageRelease(partialImageRef);
-//            }
-//        }
-//        
-//        CFRelease(imageSource);
-//    }
-//    safe_block(self.progressBlock, [self.imageData length], self.expectedSize);
 }
 
 
@@ -155,40 +146,10 @@ NSURLSessionDataDelegate
         });
         
         safe_block(self.completedBlock, nil, [NSError errorWithDomain:NSURLErrorDomain code:[((NSHTTPURLResponse *)response) statusCode] userInfo:nil], YES);
-        
+
         CFRunLoopStop(CFRunLoopGetCurrent());
         [self done];
     }
-    
-//    if (![response respondsToSelector:@selector(statusCode)] || ([((NSHTTPURLResponse *)response) statusCode] < 400 && [((NSHTTPURLResponse *)response) statusCode] != 304)) {
-//        NSInteger expected = response.expectedContentLength > 0 ? (NSInteger)response.expectedContentLength : 0;
-//        self.imageData = [[NSMutableData alloc] initWithCapacity:expected];
-//        self.expectedSize = expected;
-//        
-//        safe_block(self.progressBlock, 0, self.expectedSize);
-//        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [[NSNotificationCenter defaultCenter] postNotificationName:NAWebImageDownloadReceiveResponseNotification object:self];
-//        });
-//    } else {
-//        NSUInteger code = [((NSHTTPURLResponse *)response) statusCode];
-//        
-//        //This is the case when server returns '304 Not Modified'. It means that remote image is not changed.
-//        //In case of 304 we need just cancel the operation and return cached image from the cache.
-//        if (code == 304) {
-//            [self cancelInternal];
-//        } else {
-//            [self.urlConnection cancel];
-//        }
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [[NSNotificationCenter defaultCenter] postNotificationName:NAWebImageDownloadStopNotification object:self];
-//        });
-//        
-//        safe_block(self.completedBlock, nil, nil, [NSError errorWithDomain:NSURLErrorDomain code:[((NSHTTPURLResponse *)response) statusCode] userInfo:nil], YES);
-//        
-//        CFRunLoopStop(CFRunLoopGetCurrent());
-//        [self done];
-//    }
 }
 
 
@@ -216,21 +177,6 @@ NSURLSessionDataDelegate
         safe_block(self.completedBlock, nil, [NSError errorWithDomain:NAWebDataErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"Image data is nil"}], YES);
     }
     [self done];
-    
-    
-//    if (self.imageData) {
-//        UIImage *image = [UIImage imageWithData:self.imageData scale:1.f];
-//        
-//        if (CGSizeEqualToSize(image.size, CGSizeZero)) {
-//            safe_block(self.completedBlock, nil, nil, [NSError errorWithDomain:NAWebImageErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Downloaded image has 0 pixels"}], YES);
-//        } else {
-//            safe_block(self.completedBlock, image, self.imageData, nil, YES);
-//        }
-//    } else {
-//        safe_block(self.completedBlock, nil, nil, [NSError errorWithDomain:NAWebImageErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"Image data is nil"}], YES);
-//    }
-//    
-//    [self done];
 }
 
 
@@ -282,6 +228,37 @@ NSURLSessionDataDelegate
 
 @implementation NAWebDataDownloadOperation (NSURLSession)
 
+- (void)startSessionTask {
+    self.sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    self.urlSession = [NSURLSession sessionWithConfiguration:self.sessionConfiguration delegate:self delegateQueue:self.urlSessionQueue];
+    self.urlSessionTask = [self.urlSession dataTaskWithRequest:self.urlRequest];
+    [self.urlSessionTask resume];
+    
+    self.executing = YES;
+    self.finished = NO;
+    self.thread = [NSThread currentThread];
+    
+    safe_async_main_queue_block(self.progressBlock, nil, 0, NSURLResponseUnknownLength);
+    
+    if (self.urlSession) {
+        safe_async_main_queue_block(^() {
+            [[NSNotificationCenter defaultCenter] postNotificationName:NAWebDataDownloadStartNotification object:self];
+        });
+        
+        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_5_1) {
+            // Make sure to run the runloop in our background thread so it can process downloaded data
+            // Note: we use a timeout to work around an issue with NSURLConnection cancel under iOS 5
+            //       not waking up the runloop, leading to dead threads (see https://github.com/rs/SDWebImage/issues/466)
+            CFRunLoopRunInMode(kCFRunLoopDefaultMode, 10, false);
+        } else {
+            CFRunLoopRun();
+        }
+    } else {
+        safe_block(self.completedBlock, nil, [NSError errorWithDomain:NSURLErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey :  @"NSURLSession can't be initialized"}], YES);
+    }
+}
+
+
 #pragma mark - NSURLSessionDelegate
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
@@ -314,28 +291,6 @@ NSURLSessionDataDelegate
     
     self.completedBlock = nil;
     [self done];
-    
-//    if (error) {
-//        safe_block(self.completedBlock, nil, nil, error, YES);
-//    } else {
-//        if (self.imageData) {
-//            UIImage *tmpImage = [UIImage imageWithData:self.imageData scale:1.f];
-//            if (tmpImage) {
-//                if (CGSizeEqualToSize(tmpImage.size, CGSizeZero)) {
-//                    safe_block(self.completedBlock, nil, nil, [NSError errorWithDomain:NAWebImageErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Downloaded image has 0 pixels"}], YES);
-//                } else {
-//                    safe_block(self.completedBlock, tmpImage, self.imageData, nil, YES);
-//                }
-//            } else {
-//                safe_block(self.completedBlock, nil, nil, [NSError errorWithDomain:NAWebImageErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Downloaded Data is not image"}], YES);
-//            }
-//        } else {
-//            safe_block(self.completedBlock, nil, nil, [NSError errorWithDomain:NAWebImageErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Image data is nil"}], YES);
-//        }
-//    }
-//    
-//    self.completedBlock = nil;
-//    [self done];
 }
 
 
@@ -345,50 +300,6 @@ NSURLSessionDataDelegate
     self.expectedSize = dataTask.countOfBytesExpectedToReceive;
     
     safe_block(self.progressBlock, self.data, self.data.length, self.expectedSize);
-
-    
-//    self.imageData ? nil : (self.imageData = [NSMutableData new]);
-//    [self.imageData appendData:data];
-//    self.expectedSize = dataTask.countOfBytesExpectedToReceive;
-//    
-//    if ([self.imageData length] > 0 && self.completedBlock) {
-//        const NSInteger receivedTotalSize = [self.imageData length];
-//        
-//        CGImageSourceRef imageSource = CGImageSourceCreateWithData((__bridge CFDataRef)self.imageData, NULL);
-//        NSInteger width = 0, height = 0;
-//        NSInteger orientation = 0;
-//        if (width + height == 0) {
-//            CFDictionaryRef properties =  CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
-//            
-//            CFTypeRef value = CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth);
-//            if (value) CFNumberGetValue(value, kCFNumberLongType, &width);
-//            
-//            value = CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight);
-//            if (value) CFNumberGetValue(value, kCFNumberLongType, &height);
-//            
-//            value = CFDictionaryGetValue(properties, kCGImagePropertyOrientation);
-//            if (value) CFNumberGetValue(value, kCFNumberNSIntegerType, &orientation);
-//            
-//            CFRelease(properties);
-//            
-//            orientation = [[self class] orientationFromPropertyValue:(orientation == -1 ? 1 : orientation)];
-//        }
-//        
-//        if (width + height > 0 && receivedTotalSize < self.expectedSize) {
-//            CGImageRef partialImageRef = CGImageSourceCreateImageAtIndex(imageSource, 0, NULL);
-//            if (partialImageRef) {
-//                UIImage *tmpImage = partialImageRef ? [UIImage imageWithCGImage:partialImageRef] : nil;
-//                
-//                safe_main_queue_block(self.completedBlock, tmpImage, self.imageData, nil, NO);
-//                
-//                CGImageRelease(partialImageRef);
-//            }
-//        }
-//        
-//        CFRelease(imageSource);
-//    }
-//    
-//    safe_block(self.progressBlock, [self.imageData length], self.expectedSize);
 }
 
 
@@ -454,7 +365,7 @@ NSURLSessionDataDelegate
 
 
 - (void)start {
-    if (!_urlRequest) {
+    if (!self.urlRequest) {
         return;
     }
     
@@ -467,39 +378,9 @@ NSURLSessionDataDelegate
     }
     
     if ([self isSessionTask]) {
-        if (!self.sessionConfiguration) {
-            self.sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        }
-        if (!self.urlSession) {
-            self.urlSession = [NSURLSession sessionWithConfiguration:self.sessionConfiguration delegate:self delegateQueue:self.urlSessionQueue];
-        }
-        self.urlSessionTask = [self.urlSession dataTaskWithRequest:self.urlRequest];
-        [self.urlSessionTask resume];
+        [self startSessionTask];
     } else {
-        self.urlConnection = [[NSURLConnection alloc] initWithRequest:_urlRequest delegate:self startImmediately:NO];
-        self.executing = YES;
-        self.thread = [NSThread currentThread];
-        
-        [self.urlConnection start];
-
-        safe_async_main_queue_block(self.progressBlock, nil, 0, NSURLResponseUnknownLength);
-        
-        if (self.urlConnection) {
-            safe_async_main_queue_block(^() {
-                [[NSNotificationCenter defaultCenter] postNotificationName:NAWebDataDownloadStartNotification object:self];
-            });
-
-            if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_5_1) {
-                // Make sure to run the runloop in our background thread so it can process downloaded data
-                // Note: we use a timeout to work around an issue with NSURLConnection cancel under iOS 5
-                //       not waking up the runloop, leading to dead threads (see https://github.com/rs/SDWebImage/issues/466)
-                CFRunLoopRunInMode(kCFRunLoopDefaultMode, 10, false);
-            } else {
-                CFRunLoopRun();
-            }
-        } else {
-            safe_block(self.completedBlock, nil, [NSError errorWithDomain:NSURLErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Connection can't be initialized"}], YES);
-        }
+        [self startConnectionTask];
     }
 }
 
@@ -541,7 +422,7 @@ NSURLSessionDataDelegate
 
 
 /**
- *  called when received all data (included fail and success ...)
+ *  called when requested operation finished (including failure and success ...)
  */
 - (void)done {
     self.executing = NO;
@@ -573,7 +454,19 @@ NSURLSessionDataDelegate
     if (self.urlConnection) {
         [self.urlConnection cancel];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+        safe_sync_main_queue_block(^() {
+            [[NSNotificationCenter defaultCenter] postNotificationName:NAWebDataDownloadStopNotification object:nil];
+        });
+        
+        if (self.executing) self.executing = NO;
+        if (!self.finished) self.finished = YES;
+    }
+    
+    
+    if (self.urlSession) {
+        [self.urlSessionTask cancel];
+        
+        safe_sync_main_queue_block(^() {
             [[NSNotificationCenter defaultCenter] postNotificationName:NAWebDataDownloadStopNotification object:nil];
         });
         
