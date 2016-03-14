@@ -1,0 +1,400 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		187385541C9293AA00B8A466 /* NAImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 1873854C1C9293AA00B8A466 /* NAImageCache.m */; };
+		187385551C9293AA00B8A466 /* NAWebDataDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 187385501C9293AA00B8A466 /* NAWebDataDownloader.m */; };
+		187385561C9293AA00B8A466 /* NAWebDataDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 187385521C9293AA00B8A466 /* NAWebDataDownloadOperation.m */; };
+		1873855A1C9293CC00B8A466 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 187385581C9293CC00B8A466 /* AppDelegate.m */; };
+		1873855B1C9293CC00B8A466 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 187385591C9293CC00B8A466 /* Assets.xcassets */; };
+		187385601C9293DE00B8A466 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1873855C1C9293DE00B8A466 /* Info.plist */; };
+		187385611C9293DE00B8A466 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1873855D1C9293DE00B8A466 /* main.m */; };
+		187385621C9293DE00B8A466 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1873855F1C9293DE00B8A466 /* ViewController.m */; };
+		1873856E1C929A1E00B8A466 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1873856A1C929A1E00B8A466 /* LaunchScreen.storyboard */; };
+		1873856F1C929A1E00B8A466 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1873856C1C929A1E00B8A466 /* Main.storyboard */; };
+		18EB4FA71C96588400576393 /* NAWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EB4FA61C96588400576393 /* NAWebImageDecoder.m */; };
+		18EB4FAC1C965C8F00576393 /* NAWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EB4FAB1C965C8F00576393 /* NAWebImageManager.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1873854B1C9293AA00B8A466 /* NAImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAImageCache.h; sourceTree = "<group>"; };
+		1873854C1C9293AA00B8A466 /* NAImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAImageCache.m; sourceTree = "<group>"; };
+		1873854E1C9293AA00B8A466 /* NAWebDataDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAWebDataDef.h; sourceTree = "<group>"; };
+		1873854F1C9293AA00B8A466 /* NAWebDataDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAWebDataDownloader.h; sourceTree = "<group>"; };
+		187385501C9293AA00B8A466 /* NAWebDataDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAWebDataDownloader.m; sourceTree = "<group>"; };
+		187385511C9293AA00B8A466 /* NAWebDataDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAWebDataDownloadOperation.h; sourceTree = "<group>"; };
+		187385521C9293AA00B8A466 /* NAWebDataDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAWebDataDownloadOperation.m; sourceTree = "<group>"; };
+		187385531C9293AA00B8A466 /* NAWebDataOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAWebDataOperation.h; sourceTree = "<group>"; };
+		187385571C9293CC00B8A466 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = NAWebImageTest/AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		187385581C9293CC00B8A466 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = NAWebImageTest/AppDelegate.m; sourceTree = SOURCE_ROOT; };
+		187385591C9293CC00B8A466 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = NAWebImageTest/Assets.xcassets; sourceTree = SOURCE_ROOT; };
+		1873855C1C9293DE00B8A466 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = NAWebImageTest/Info.plist; sourceTree = SOURCE_ROOT; };
+		1873855D1C9293DE00B8A466 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = NAWebImageTest/main.m; sourceTree = SOURCE_ROOT; };
+		1873855E1C9293DE00B8A466 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = NAWebImageTest/ViewController.h; sourceTree = SOURCE_ROOT; };
+		1873855F1C9293DE00B8A466 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = NAWebImageTest/ViewController.m; sourceTree = SOURCE_ROOT; };
+		1873856B1C929A1E00B8A466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = NAWebImageTest/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
+		1873856D1C929A1E00B8A466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = NAWebImageTest/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		1888B6821C8FC03700E7BCEE /* NAWebImage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NAWebImage.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		18EB4FA51C96588400576393 /* NAWebImageDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAWebImageDecoder.h; sourceTree = "<group>"; };
+		18EB4FA61C96588400576393 /* NAWebImageDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAWebImageDecoder.m; sourceTree = "<group>"; };
+		18EB4FAA1C965C8F00576393 /* NAWebImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAWebImageManager.h; sourceTree = "<group>"; };
+		18EB4FAB1C965C8F00576393 /* NAWebImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAWebImageManager.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1888B67F1C8FC03700E7BCEE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1873854A1C9293AA00B8A466 /* NAWebImage */ = {
+			isa = PBXGroup;
+			children = (
+				18EB4FA91C965C7700576393 /* Utils */,
+				18EB4FA41C96586000576393 /* Images */,
+				187385681C92953D00B8A466 /* Downloader */,
+				187385671C92953200B8A466 /* Headers */,
+				187385661C9294B600B8A466 /* Protocal */,
+				187385651C9294AC00B8A466 /* Cache */,
+			);
+			path = NAWebImage;
+			sourceTree = "<group>";
+		};
+		187385651C9294AC00B8A466 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				1873854B1C9293AA00B8A466 /* NAImageCache.h */,
+				1873854C1C9293AA00B8A466 /* NAImageCache.m */,
+			);
+			name = Cache;
+			sourceTree = "<group>";
+		};
+		187385661C9294B600B8A466 /* Protocal */ = {
+			isa = PBXGroup;
+			children = (
+				187385531C9293AA00B8A466 /* NAWebDataOperation.h */,
+			);
+			name = Protocal;
+			sourceTree = "<group>";
+		};
+		187385671C92953200B8A466 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				1873854E1C9293AA00B8A466 /* NAWebDataDef.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		187385681C92953D00B8A466 /* Downloader */ = {
+			isa = PBXGroup;
+			children = (
+				1873854F1C9293AA00B8A466 /* NAWebDataDownloader.h */,
+				187385501C9293AA00B8A466 /* NAWebDataDownloader.m */,
+				187385511C9293AA00B8A466 /* NAWebDataDownloadOperation.h */,
+				187385521C9293AA00B8A466 /* NAWebDataDownloadOperation.m */,
+			);
+			name = Downloader;
+			sourceTree = "<group>";
+		};
+		1888B6791C8FC03700E7BCEE = {
+			isa = PBXGroup;
+			children = (
+				1873854A1C9293AA00B8A466 /* NAWebImage */,
+				1888B69C1C8FC07900E7BCEE /* NAWebImageTest */,
+				1888B6831C8FC03700E7BCEE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1888B6831C8FC03700E7BCEE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1888B6821C8FC03700E7BCEE /* NAWebImage.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1888B69C1C8FC07900E7BCEE /* NAWebImageTest */ = {
+			isa = PBXGroup;
+			children = (
+				187385571C9293CC00B8A466 /* AppDelegate.h */,
+				187385581C9293CC00B8A466 /* AppDelegate.m */,
+				1873856A1C929A1E00B8A466 /* LaunchScreen.storyboard */,
+				1873856C1C929A1E00B8A466 /* Main.storyboard */,
+				187385591C9293CC00B8A466 /* Assets.xcassets */,
+				1873855C1C9293DE00B8A466 /* Info.plist */,
+				1873855D1C9293DE00B8A466 /* main.m */,
+				1873855E1C9293DE00B8A466 /* ViewController.h */,
+				1873855F1C9293DE00B8A466 /* ViewController.m */,
+			);
+			name = NAWebImageTest;
+			path = NYWebImageTest;
+			sourceTree = "<group>";
+		};
+		18EB4FA41C96586000576393 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				18EB4FA51C96588400576393 /* NAWebImageDecoder.h */,
+				18EB4FA61C96588400576393 /* NAWebImageDecoder.m */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		18EB4FA91C965C7700576393 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				18EB4FAA1C965C8F00576393 /* NAWebImageManager.h */,
+				18EB4FAB1C965C8F00576393 /* NAWebImageManager.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1888B6811C8FC03700E7BCEE /* NAWebImage */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1888B6991C8FC03700E7BCEE /* Build configuration list for PBXNativeTarget "NAWebImage" */;
+			buildPhases = (
+				1888B67E1C8FC03700E7BCEE /* Sources */,
+				1888B67F1C8FC03700E7BCEE /* Frameworks */,
+				1888B6801C8FC03700E7BCEE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NAWebImage;
+			productName = NYWebImage;
+			productReference = 1888B6821C8FC03700E7BCEE /* NAWebImage.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1888B67A1C8FC03700E7BCEE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = Apple;
+				TargetAttributes = {
+					1888B6811C8FC03700E7BCEE = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = CG6329SXZK;
+					};
+				};
+			};
+			buildConfigurationList = 1888B67D1C8FC03700E7BCEE /* Build configuration list for PBXProject "NAWebImage" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1888B6791C8FC03700E7BCEE;
+			productRefGroup = 1888B6831C8FC03700E7BCEE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1888B6811C8FC03700E7BCEE /* NAWebImage */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1888B6801C8FC03700E7BCEE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				187385601C9293DE00B8A466 /* Info.plist in Resources */,
+				1873856F1C929A1E00B8A466 /* Main.storyboard in Resources */,
+				1873856E1C929A1E00B8A466 /* LaunchScreen.storyboard in Resources */,
+				1873855B1C9293CC00B8A466 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1888B67E1C8FC03700E7BCEE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				187385621C9293DE00B8A466 /* ViewController.m in Sources */,
+				18EB4FAC1C965C8F00576393 /* NAWebImageManager.m in Sources */,
+				187385611C9293DE00B8A466 /* main.m in Sources */,
+				1873855A1C9293CC00B8A466 /* AppDelegate.m in Sources */,
+				187385561C9293AA00B8A466 /* NAWebDataDownloadOperation.m in Sources */,
+				187385551C9293AA00B8A466 /* NAWebDataDownloader.m in Sources */,
+				187385541C9293AA00B8A466 /* NAImageCache.m in Sources */,
+				18EB4FA71C96588400576393 /* NAWebImageDecoder.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		1873856A1C929A1E00B8A466 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1873856B1C929A1E00B8A466 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		1873856C1C929A1E00B8A466 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1873856D1C929A1E00B8A466 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1888B6971C8FC03700E7BCEE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1888B6981C8FC03700E7BCEE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1888B69A1C8FC03700E7BCEE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "$(SRCROOT)/NAWebImageTest/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = liuzp.NAWebImage;
+				PRODUCT_NAME = NAWebImage;
+			};
+			name = Debug;
+		};
+		1888B69B1C8FC03700E7BCEE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "$(SRCROOT)/NAWebImageTest/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = liuzp.NAWebImage;
+				PRODUCT_NAME = NAWebImage;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1888B67D1C8FC03700E7BCEE /* Build configuration list for PBXProject "NAWebImage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1888B6971C8FC03700E7BCEE /* Debug */,
+				1888B6981C8FC03700E7BCEE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1888B6991C8FC03700E7BCEE /* Build configuration list for PBXNativeTarget "NAWebImage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1888B69A1C8FC03700E7BCEE /* Debug */,
+				1888B69B1C8FC03700E7BCEE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1888B67A1C8FC03700E7BCEE /* Project object */;
+}
